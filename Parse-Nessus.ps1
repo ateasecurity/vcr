@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 Parse-Nessus produces a directory of standalone html reports from a .nessus file.
 
@@ -345,8 +345,9 @@ function Do-PreReqs() {
 # Create the html for each host report td element
 function Format-DashboardHtmlItem($ipaddress, $reportsbyhostfolder, $cssclass) 
 {
-	$linkpath = $ipaddress.Replace(".", "-")
-	$html = "<td class=""$cssclass""><a href="".\reportsbyhost\$linkpath.html"">$ipaddress</a></td>"
+    $namn = $c.HostName.replace(".corpnet.ifsworld.com." , " ")
+	$linkpath = $c.IPAddress.Replace(".", "-")
+	$html = "<td class=""$cssclass""><a href="".\reportsbyhost\$linkpath.html"">$namn</a></td>"
 	return $html
 }
 
@@ -362,7 +363,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 	
 	$html = "<table id=""tabips"">"
 	$i = 0
-	$rowmax = 6
+	$rowmax = 5
 	foreach ($c in $crits) 
 	{
 		if ($c.IPAddress -ne $null)
@@ -370,7 +371,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "critbg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "critbg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
@@ -385,7 +386,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "highbg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "highbg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
@@ -401,7 +402,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "medbg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "medbg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
@@ -416,7 +417,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "lowbg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "lowbg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
@@ -431,7 +432,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 			
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "infobg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "infobg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
@@ -446,7 +447,7 @@ function Format-DashboardHtmlReport($allhosts, $reportsbyhostfolder)
 			if ($i -eq 0) 
 				{ $html += "<tr>" }
 			
-			$html += Format-DashboardHtmlItem $c.IPAddress $reportsbyhostfolder "dunnobg"
+			$html += Format-DashboardHtmlItem $c.HostName $reportsbyhostfolder "dunnobg"
 			$i += 1
 
 			if ($i -eq $rowmax) 
